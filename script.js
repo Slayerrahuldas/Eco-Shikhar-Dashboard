@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const apiUrl = "https://excel-backend.onrender.com/data"; // Update this with your backend URL
+    const apiUrl = "https://excel-dashboard-backend.onrender.com/data"; // Update this with your backend URL
 
     let tableData = [];
 
