@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const csvFileUrl = "./data.csv"; // CSV file path in your GitHub repository
+    const csvFileUrl = "./data.csv"; // Path to your CSV file
 
     let tableData = [];
 
-    // Fetch the CSV file
+    // Fetch and parse the CSV file
     fetch(csvFileUrl)
         .then(response => response.text())
         .then(csvText => {
-            const rows = csvText.split("\n").map(row => row.split(","));
-            tableData = rows.slice(1); // Remove headers
+            const rows = csvText.trim().split("\n");
+            tableData = rows.slice(1).map(row => row.split(",")); // Remove headers and split by comma
             populateTable(tableData);
             populateDropdowns(tableData);
         })
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function populateTable(data) {
         const tableBody = document.getElementById("table-body");
-        tableBody.innerHTML = ""; // Clear the table
+        tableBody.innerHTML = ""; // Clear existing rows
         data.forEach(row => {
             const tr = document.createElement("tr");
             row.forEach(cell => {
@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Search functionality
     document.getElementById("search-bar").addEventListener("input", function (e) {
         const searchTerm = e.target.value.toLowerCase();
         const filteredData = tableData.filter(row =>
@@ -59,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         populateTable(filteredData);
     });
 
+    // Filter Buttons
     document.getElementById("filter-button-1").addEventListener("click", function () {
         const filteredData = tableData.filter(row => parseFloat(row[7]) < 1000);
         populateTable(filteredData);
